@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -15,12 +15,12 @@
 
 	<!-- Bootstrap core CSS -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
-    <title>Questions - Notes Quizzer</title>
-  </head>
+	<title>Questions - Notes Quizzer</title>
+</head>
 
-  <body>
-  
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<body>
+
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -33,16 +33,38 @@
 		</div>
 	</nav>
 
-    <div class="container" style="margin-bottom:15px;">
+	<div class="container" style="margin-bottom:15px;">
+	<ol style="margin-top: 20px">
+		<!--{% for q in questions %} -->
+		<li>
+			<p>Question sample</p>
+			<div class="input-group">
+				
+				<input type="text" class="form-control" placeholder="Enter Answer Here" aria-describedby="sizing-addon2">
+			</div>
+		</li>
+		<!-- {% end for %} -->
 
-	  
 
-    </div>
 
-    <footer class="footer" style="margin-left:18%;">
-  	  <div class="container">
-		<p class="text-muted">&copy; <script>document.write(new Date().getFullYear());</script> Notes Quizzer · <a href="/about">About</a></p>
-  	  </div>
+
+	</ol>
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+	<footer class="footer" style="margin-left:18%;">
+		<div class="container">
+			<p class="text-muted">&copy; <script>document.write(new Date().getFullYear());</script> Notes Quizzer · <a href="/about">About</a></p>
+		</div>
 	</footer>
 
 	<!-- Bootstrap core JavaScript
@@ -54,5 +76,5 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="static/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+</body>
 </html>
