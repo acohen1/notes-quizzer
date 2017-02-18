@@ -10,64 +10,24 @@ def index(request):
         form = NotesForm(request.POST)
         if form.is_valid():
             notes = form.cleaned_data['notes']
-            
-            keywords = ["""ADD KEYWORDS HERE"""]
-            questions = ["""HOLDER"""]
-            answers = ["""HOLDER"""]
 
-
-            periodIndex = 0
-            sentence = ""
-            tempString = ""
-            keywordIndex = 0
-            q = ""
-            a = ""
-            while (not notes==""):
-                periodIndex = notes.find(".")
-                sentence = notes[0:periodIndex]
-                for i in keywords:
-                    if sentence.find(i)>=0:
-                        keywordIndex = sentence.find(i)
-                a = sentence[0, keywordIndex-1]
-                answers.append(a)
-                q = sentence[keywordIndex, len(sentence)-1]
-                questions.append(q)
-                notes = notes[len(sentence), len(notes)-1]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            string = notes
+            keywords = ["invented", "created", "is"]
+            count = 0
+            answers = []
+            questions = []
+            wordIndex = 0
+            perIndex = string.find(".")
+            temp = string[:perIndex]
+            while not string == "":
+                for word in keywords:
+                    if temp.find(word) != -1:
+                        wordIndex = temp.find(word)
+                        answers.append(temp[:wordIndex-1])
+                        questions.append(temp[wordIndex:])
+                        string = string[perIndex+2:]
+                        perIndex = string.find(".")
+                        temp = string[:perIndex]
 
             return render(request, 'quizzer/questions.html')
     return HttpResponseRedirect(request, 'quizzer/index.html')
