@@ -10,5 +10,6 @@ def index(request):
         form = NotesForm(request.POST)
         if form.is_valid():
             notes = form.cleaned_data['notes']
+            """Logic here"""
             return render(request, 'quizzer/questions.html')
     return HttpResponseRedirect(request, 'quizzer/index.html')
