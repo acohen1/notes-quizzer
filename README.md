@@ -7,4 +7,4 @@ Look at the various components included in Bootstrap version 4 alpha and experim
 
 Front end is stored in quizzer/templates/quizzer/ and home page file is quizzer/templates/quizzer/index.html
 
-Remember to frequently do 1. 'git add quizzer/templates/quizzer/index.html' 2. 'git commit -m "Detailed commit message"' 3. 'git push'
+Remember to frequently do 'git pull' and when ready, frequently do 1. 'git add quizzer/templates/quizzer/index.html' 2. 'git commit -m "Detailed commit message"' 3. 'git push'
