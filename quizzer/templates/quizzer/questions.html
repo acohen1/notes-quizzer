@@ -12,6 +12,7 @@
 	<link rel="icon" type="image/png" href="../static/favicon-96x96.png" sizes="96x96">
 	<link rel="icon" type="image/png" href="../static/favicon-32x32.png" sizes="32x32">
 	<link rel="icon" type="image/png" href="../static/favicon-128.png" sizes="128x128">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- Bootstrap core CSS -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
@@ -19,8 +20,21 @@
 
 	<style type="text/css">
 
-		body{
-			font-family: "Lucida Console";
+		body {
+			font-family: "Roboto";
+		}
+
+		.nav-link:hover{
+			background:black;
+		}
+
+		@font-face {
+    		font-family: "Roboto";
+    		src: url("../static/fonts/Roboto-Regular.ttf");
+		}
+
+		.btn:hover{
+			cursor:pointer;
 		}
 
 	</style>
@@ -28,53 +42,76 @@
 
 <body>
 
-	<nav class="navbar navbar-toggleable-md navbar-light bg-inverse text-white">
+	<nav class="navbar navbar-toggleable-md navbar-light bg-inverse text-white" style="height:45px;">
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand text-white" href="#" style="margin-left:20%; width: 2000px; font-size: 150%">Lumex</a>
+		<a class="navbar-brand text-white" href="../" style="margin-left:20%; width: 2000px; font-size: 150%">Lumex</a>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link active text-white" href="#" style="font-size: 105%">Home <span class="sr-only">(current)</span></a>
-				<a class="nav-item nav-link text-white" href="#" style="font-size: 105%">About</a>
+				<a class="nav-item nav-link active text-white" href="../" style="font-size: 105%">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-item nav-link text-white" href="/about" style="font-size: 105%">About</a>
 			</div>
 		</div>
 	</nav>
 
 	<div class="container" style="margin-bottom:15px;">
-	<ol style="margin-top: 20px">
-		<!--{% for q in questions %} -->
-		<li>
-			<p>Question sample</p>
-			<div class="input-group">
-				
-				<input type="text" class="form-control" placeholder="Enter Answer Here" aria-describedby="sizing-addon2">
-			</div>
-		</li>
-		<!-- {% end for %} -->
+	<form class="form">
+      <div class="form-group">
+        <ol style="margin-top: 20px">
+        {% for question in questions %}
+			<li style="font-size:24px;">
+				<p style="margin:15px 0 0 0; font-size:24px;">{{ question|capfirst }}</p>
+				<div class="input-group" style="margin-top:0;">
+					<input type="text" class="form-control" placeholder="Enter Answer Here" aria-describedby="sizing-addon2" id="answer_{{ forloop.counter0 }}">
+					<i class="fa" aria-hidden="true" style="margin-left:6px;margin-top:6px;color:red;position:absolute;" id="wrong_{{ forloop.counter0 }}"></i>
+				</div>
+			</li>
+        {% endfor %}
+        </ol>
+        <div class="form-control-feedback" style="font-size:14px; margin-top:0; margin-left:5px; color:red;" id="feedback">{{ form.notes.errors|striptags }}</div>
+      </div>
+      <input type="button" value="Submit answers" class="btn btn-primary btn-block" onclick="checkAnswers()"/>  
+      <div role="alert" id="score_id" style="display:hidden;margin-top:10px;">
+  		
+	  </div>
+    </form>
 
+	<script>
 
+	function checkAnswers() {
+		var answers = {{ answers|safe }};
 
+		var score = 0;
+		var x;
+		for(i = 0; i < answers.length; i++){
+			x = document.getElementById("answer_"+i).value;
+			if (x.toLowerCase() == answers[i].toLowerCase()){
+				score++;
+				document.getElementById("wrong_"+i).className = "fa";
+			} else {
+				document.getElementById("wrong_"+i).className += " fa-times";
+			}
+		}
+		document.getElementById("score_id").style.display = "block";
+		document.getElementById("score_id").innerHTML = "Score: " + (score/answers.length) * 100 + "%";
+		if ((score/answers.length) * 100 < 50) {
+			document.getElementById("score_id").className = "alert alert-danger"
+		} else if ((score/answers.length) * 100 < 80) {
+			document.getElementById("score_id").className = "alert alert-warning"
+		} else {
+			document.getElementById("score_id").className = "alert alert-success"
+		}
+	}
 
-	</ol>
-
-
-	</div>
-
-
-
-
-
-
-
-
+	</script>
 
 	<footer class="footer">
-		<div class="container">
-			<p class="text-muted" style="text-align: center;">&copy; <script>document.write(new Date().getFullYear());</script> Lumex 
+			<p class="text-muted">&copy; <script>document.write(new Date().getFullYear());</script> Lumex 
 			</p>
-		</div>
 	</footer>
+
+	</div>
 
 	<!-- Bootstrap core JavaScript
 	================================================== -->

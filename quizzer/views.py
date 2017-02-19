@@ -29,5 +29,8 @@ def index(request):
                         perIndex = string.find(".")
                         temp = string[:perIndex]
 
-            return render(request, 'quizzer/questions.html')
-    return HttpResponseRedirect(request, 'quizzer/index.html')
+            return render(request, 'quizzer/questions.html', {'questions': questions, 'answers': answers})
+    return render(request, 'quizzer/index.html', {'form': form})
+
+def about(request):
+    return render(request,'quizzer/about.html')
