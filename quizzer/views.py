@@ -11,8 +11,13 @@ def index(request):
         if form.is_valid():
             notes = form.cleaned_data['notes']
 
+            text_file = open("static/verbs.dat", "r")
+            keywords = text_file.read().split(',')
+            print (keywords)
+            print (len(keywords))
+            text_file.close()
+
             string = notes
-            keywords = ["invented", "created", "is"]
             count = 0
             answers = []
             questions = []
@@ -24,7 +29,7 @@ def index(request):
                     if temp.find(word) != -1:
                         wordIndex = temp.find(word)
                         answers.append(temp[:wordIndex-1])
-                        questions.append(temp[wordIndex:])
+                        questions.append(temp[wordIndex+1:])
                         string = string[perIndex+2:]
                         perIndex = string.find(".")
                         temp = string[:perIndex]
