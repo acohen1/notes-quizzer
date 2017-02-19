@@ -28,7 +28,7 @@ def index(request):
                 for word in keywords:
                     if temp.find(word) != -1:
                         wordIndex = temp.find(word)
-                        answers.append(temp[:wordIndex-1])
+                        answers.append(temp[:wordIndex])
                         questions.append(temp[wordIndex+1:])
                         string = string[perIndex+2:]
                         perIndex = string.find(".")
