@@ -61,9 +61,9 @@
         <ol style="margin-top: 20px">
         {% for question in questions %}
 			<li style="font-size:24px;">
-				<p style="margin:15px 0 0 0; font-size:24px;">{{ question|capfirst }}</p>
+				<p style="margin:15px 0 0 0; font-size:24px;">______________ {{ question }}</p>
 				<div class="input-group" style="margin-top:0;">
-					<input type="text" class="form-control" placeholder="Enter Answer Here" aria-describedby="sizing-addon2" id="answer_{{ forloop.counter0 }}">
+					<input type="text" class="form-control" placeholder="Enter answer here" aria-describedby="sizing-addon2" id="answer_{{ forloop.counter0 }}">
 					<i class="fa" aria-hidden="true" style="margin-left:6px;margin-top:6px;color:red;position:absolute;" id="wrong_{{ forloop.counter0 }}"></i>
 				</div>
 			</li>
