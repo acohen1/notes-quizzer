@@ -30,7 +30,9 @@ def index(request):
                         wordIndex = temp.find(word)
                         answers.append(temp[:wordIndex])
                         questions.append(temp[wordIndex+1:])
-                        string = string[perIndex+2:]
+                        string = string[perIndex+1:]
+                        while(string[:1] == " " or string[:1] == "\n"):
+                            string = string[1:]
                         perIndex = string.find(".")
                         temp = string[:perIndex]
 

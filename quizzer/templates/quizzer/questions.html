@@ -85,9 +85,11 @@
 
 		var score = 0;
 		var x;
+		var a;
 		for(i = 0; i < answers.length; i++){
 			x = document.getElementById("answer_"+i).value;
-			if (x.toLowerCase() == answers[i].toLowerCase()){
+			a = answers[i].replace(/(\r\n|\n|\r)/gm,"");
+			if (x.toLowerCase() == a.toLowerCase()){
 				score++;
 				document.getElementById("wrong_"+i).className = "fa";
 			} else {
@@ -95,7 +97,7 @@
 			}
 		}
 		document.getElementById("score_id").style.display = "block";
-		document.getElementById("score_id").innerHTML = "Score: " + (score/answers.length) * 100 + "%";
+		document.getElementById("score_id").innerHTML = "Score: " + Math.round((score/answers.length) * 100) + "%";
 		if ((score/answers.length) * 100 < 50) {
 			document.getElementById("score_id").className = "alert alert-danger"
 		} else if ((score/answers.length) * 100 < 80) {
