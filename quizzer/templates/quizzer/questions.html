@@ -29,8 +29,8 @@
 		}
 
 		@font-face {
-    		font-family: "Roboto";
-    		src: url("../static/fonts/Roboto-Light.ttf");
+			font-family: "Roboto";
+			src: url("../static/fonts/Roboto-Light.ttf");
 		}
 
 		.btn:hover{
@@ -38,6 +38,8 @@
 		}
 
 	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -56,63 +58,70 @@
 	</nav>
 
 	<div class="container" style="margin-bottom:15px;">
-	<form class="form">
-      <div class="form-group">
-        <ol style="margin-top: 20px">
-        {% for question in questions %}
-			<li style="font-size:24px;">
-				<p style="margin:15px 0 0 0; font-size:24px;">______________ {{ question }}</p>
-				<div class="input-group" style="margin-top:0;">
-					<input type="text" class="form-control" placeholder="Enter answer here" aria-describedby="sizing-addon2" id="answer_{{ forloop.counter0 }}">
-					<i class="fa" aria-hidden="true" style="margin-left:6px;margin-top:6px;color:red;position:absolute;" id="wrong_{{ forloop.counter0 }}"></i>
-				</div>
-			</li>
-        {% endfor %}
-        </ol>
-        <div class="form-control-feedback" style="font-size:14px; margin-top:0; margin-left:5px; color:red;" id="feedback">{{ form.notes.errors|striptags }}</div>
-      </div>
-      <input type="button" value="Submit answers" class="btn btn-primary btn-block" onclick="checkAnswers()"/>  
-      <div role="alert" id="score_id" style="display:hidden;margin-top:10px;">
-  		
-	  </div>
-    </form>
+		<form class="form">
+			<div class="form-group">
+				<ol style="margin-top: 20px">
+					{% for question in questions %}
+					<li style="font-size:24px;">
+						<p style="margin:15px 0 0 0; font-size:24px;">______________ {{ question }}</p>
+						<div class="input-group" style="margin-top:0;">
+							<input type="text" class="form-control answer_input" placeholder="Enter answer here" id="answer_{{ forloop.counter0 }}" onkeydown="if (event.keyCode == 13) {return false;}">
+							<i class="fa" aria-hidden="true" style="margin-left:6px;margin-top:6px;color:red;position:absolute;" id="wrong_{{ forloop.counter0 }}"></i>
+						</div>
+					</li>
+					{% endfor %}
+				</ol>
+				<div class="form-control-feedback" style="font-size:14px; margin-top:0; margin-left:5px; color:red;" id="feedback">{{ form.notes.errors|striptags }}</div>
+			</div>
+			<input type="button" value="Submit answers" id="submit_answers" class="btn btn-primary btn-block" onclick="checkAnswers()"/>  
+			<div role="alert" id="score_id" style="display:hidden;margin-top:10px;">
+			</div>
+		</form>
 
-	<script>
+		<script>
+			$(".answer_input").keyup(function(event){
+				if(event.keyCode == 13){
+					$("#submit_answers").click();
+				}
+			});
+		</script>
 
-	function checkAnswers() {
-		var answers = {{ answers|safe }};
-		console.log(answers[0])
+		<script>
 
-		var score = 0;
-		var x;
-		var a;
-		for(i = 0; i < answers.length; i++){
-			x = document.getElementById("answer_"+i).value;
-			a = answers[i].replace(/(\r\n|\n|\r)/gm,"");
-			if (x.toLowerCase() == a.toLowerCase()){
-				score++;
-				document.getElementById("wrong_"+i).className = "fa";
-			} else {
-				document.getElementById("wrong_"+i).className += " fa-times";
+			function checkAnswers() {
+				var answers = {{ answers|safe }};
+				console.log(answers[0])
+
+				var score = 0;
+				var x;
+				var a;
+				for(i = 0; i < answers.length; i++){
+					x = document.getElementById("answer_"+i).value;
+					a = answers[i].replace(/(\r\n|\n|\r)/gm,"");
+					if (x.toLowerCase() == a.toLowerCase()){
+						score++;
+						document.getElementById("wrong_"+i).className = "fa";
+					} else {
+						document.getElementById("wrong_"+i).className += " fa-times";
+					}
+				}
+				document.getElementById("score_id").style.display = "block";
+				document.getElementById("score_id").innerHTML = "Score: " + Math.round((score/answers.length) * 100) + "%";
+				if ((score/answers.length) * 100 < 50) {
+					document.getElementById("score_id").className = "alert alert-danger"
+				} else if ((score/answers.length) * 100 < 80) {
+					document.getElementById("score_id").className = "alert alert-warning"
+				} else {
+					document.getElementById("score_id").className = "alert alert-success"
+				}
 			}
-		}
-		document.getElementById("score_id").style.display = "block";
-		document.getElementById("score_id").innerHTML = "Score: " + Math.round((score/answers.length) * 100) + "%";
-		if ((score/answers.length) * 100 < 50) {
-			document.getElementById("score_id").className = "alert alert-danger"
-		} else if ((score/answers.length) * 100 < 80) {
-			document.getElementById("score_id").className = "alert alert-warning"
-		} else {
-			document.getElementById("score_id").className = "alert alert-success"
-		}
-	}
 
-	</script>
+		</script>
 
-	<footer class="footer" style="text-align: center;">
+		<footer class="footer" style="text-align: center;">
 			<p class="text-muted">&copy; <script>document.write(new Date().getFullYear());</script> Luxem 
 			</p>
-	</footer>
+		</footer>
 
 	</div>
 
